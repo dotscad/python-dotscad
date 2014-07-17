@@ -119,11 +119,17 @@ class CustomizerPossible(object):
         else:
             for param in re.split(r'\s*,\s*', self._raw):
                 pair = param.split(':', 2)
-                # @todo detect numeric pair[0]
+                # Detect numeric values
+                value = pair[0]
+                if value.isdigit():
+                    value = int(value)
+                elif re.match(r'^\d+\.\d+$', value):
+                    value = float(value)
+                # Assign the parameter
                 if len(pair) == 1:
-                    self.parameters[pair[0]] = pair[0]
+                    self.parameters[value] = value
                 else:
-                    self.parameters[pair[1]] = pair[0]
+                    self.parameters[pair[1]] = value
 
     def __str__(self):
         return self._raw
