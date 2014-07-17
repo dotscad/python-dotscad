@@ -62,7 +62,7 @@ class Customizer(OpenSCAD):
             raise ValueError("Multiple '{0}' tabs found".format(tab_name))
         self.tabs[tab_name] = []
 
-        chunks = re.split(r'(?:^|(?<=\n))(?:\s*?//\s*(.*?))?\n\s*(\w+)\s*=\s*(.+?)\s*;\s*(?://\s*\[(.+?)\])?\s*?', source, flags=re.MULTILINE)
+        chunks = re.split(r'(?:^|(?<=\n))(?:[\ \t]*?//\s*(.*?))?\n\s*(\w+)\s*=\s*(.+?)\s*;[\ \t]*(?://\s*\[(.+?)\])?[\ \t]*', source, flags=re.MULTILINE)
         # No variables, just return
         if len(chunks) == 1:
             return chunks[0]
