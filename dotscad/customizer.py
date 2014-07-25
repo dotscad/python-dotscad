@@ -131,6 +131,7 @@ class CustomizerPossible(object):
                 else:
                     self.parameters[pair[1]] = value
 
+
     def __str__(self):
         return self._raw
 

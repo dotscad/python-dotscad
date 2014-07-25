@@ -33,26 +33,24 @@ class OpenSCAD(object):
         """
         return self._source
 
-    def render_stl(self, dest):
-        if platform.system() == 'Darwin':
-            cmd = '/Applications/OpenSCAD.app/Contents/MacOS/OpenSCAD'
-        elif platform.system() == 'Windows':
-            cmd = 'openscad.exe'
-        else:
-            cmd = 'openscad'
+    def render_stl(self, dest, overwrite=False):
+        # Get path to the parent directory of the file we're working with so
+        # openscad can find includes, etc.
+        dirname = os.path.dirname(os.path.abspath(self.path))
 
         # Make sure the output has the proper suffix
         if not dest.lower().endswith('.stl'):
             dest += '.stl'
 
-        # Get path to the parent directory of the file we're working with so
-        # openscad can find includes, etc.
-        dirname = os.path.dirname(os.path.abspath(self.path))
-
         # @todo decide if we want this...
         # Destinations are relative to the source path
         #if not os.path.isabs(dest):
         #    path = os.path.join(dirname,dest)
+
+        # Don't overwrite
+        if os.path.exists(dest) and not overwrite:
+            self.debug('Skipping.  Destination file {0} exists.'.format(dest))
+            return False
 
         if self.debug():
             tmp_scad_path = os.path.join(dirname, dest + '.DEBUG.scad')
@@ -67,9 +65,18 @@ class OpenSCAD(object):
             tmp_scad.flush()
             tmp_scad_path = tmp_scad.name
 
+        # Use the appropriate command for the current OS
+        if platform.system() == 'Darwin':
+            cmd = '/Applications/OpenSCAD.app/Contents/MacOS/OpenSCAD'
+        elif platform.system() == 'Windows':
+            cmd = 'openscad.exe'
+        else:
+            cmd = 'openscad'
+
         cmd = [cmd, '-o', dest, '--render', tmp_scad_path]
         self.debug(' '.join(cmd))
         subprocess.call(cmd, cwd=dirname)
+        return True
 
     def _load(self):
         with open(self.path) as file:
