@@ -1,7 +1,7 @@
 
 import re
 
-from openscad import OpenSCAD
+from .openscad import OpenSCAD
 from collections import OrderedDict
 
 class Customizer(OpenSCAD):
