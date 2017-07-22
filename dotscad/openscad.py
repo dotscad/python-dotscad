@@ -73,7 +73,9 @@ class OpenSCAD(object):
         else:
             cmd = 'openscad'
 
-        cmd = [cmd, '-o', dest, '--render', tmp_scad_path]
+        cmd = [cmd, '-o', dest,
+            #'--render', # latest version of openscad doesn't want this [CSA]
+            tmp_scad_path]
         self.debug(' '.join(cmd))
         subprocess.call(cmd, cwd=dirname)
         return True
