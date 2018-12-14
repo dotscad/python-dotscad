@@ -1,0 +1,20 @@
+include *.md
+include LICENSE
+
+global-exclude *.c
+global-exclude *.pyc
+global-exclude *.so
+
+exclude *.Jenkinsfile
+exclude requirements.txt
+
+exclude scripts
+recursive-exclude scripts *
+exclude tests
+recursive-exclude tests *
+exclude benchmark
+recursive-exclude benchmark *
+
+recursive-include sample_package *.py
+recursive-include sample_package *.pyx
+recursive-include sample_package *.pxd
