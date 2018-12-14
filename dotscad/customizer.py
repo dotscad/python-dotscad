@@ -44,7 +44,7 @@ class Customizer(OpenSCAD):
             self._customizer_source = self._tokenize_tab_vars("Global", chunks.pop(0))
         else:
             tokenized = chunks.pop(0)  # Everything up to the first match
-            for i in xrange(0, len(chunks), 3):
+            for i in range(0, len(chunks), 3):
                 (tab_chunk, tab_name, tab_source) = chunks[i : i + 3]
                 tokenized += tab_chunk
                 # Ignore the "Hidden" tab
@@ -72,7 +72,7 @@ class Customizer(OpenSCAD):
         if len(chunks) == 1:
             return chunks[0]
         tokenized = chunks.pop(0)  # Everything up to the first match
-        for i in xrange(0, len(chunks), 5):
+        for i in range(0, len(chunks), 5):
             (desc, var_name, val, possible, extra_scad) = chunks[i : i + 5]
             # Add to our local caches of the customizer info
             self.debug("  Loading var: {0} = {1} : {2}".format(var_name, val, possible))
@@ -98,7 +98,7 @@ class CustomizerVar(object):
         self.description = description if description else ""
 
     def set(self, value):
-        if isinstance(value, (bool, basestring, str, int, long, float, complex)):
+        if isinstance(value, (bool, str, int, float, complex)):
             self.value = value
         else:
             raise ValueError("Unsupported value type")
@@ -168,6 +168,6 @@ def encode_value(val):
     """
     if isinstance(val, bool):
         return "true" if val else "false"
-    if isinstance(val, (basestring, str, unicode)):
+    if isinstance(val, str):
         return '"{0}"'.format(str(val).replace('"', '\\"').replace("\\", "\\\\"))
     return str(val)
