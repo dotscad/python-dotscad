@@ -43,6 +43,7 @@ atlassian-ide-plugin.xml
 .buildpath
 .project
 .settings/
+.vscode/
 
 # Apple stuff
 .DS_Store
